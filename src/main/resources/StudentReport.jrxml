@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport
+    xmlns="http://jasperreports.sourceforge.net/jasperreports"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+    name="StudentReport"
+    pageWidth="595"
+    pageHeight="842"
+    columnWidth="535"
+    leftMargin="30"
+    rightMargin="30"
+    topMargin="30"
+    bottomMargin="30"
+    whenNoDataType="AllSectionsNoDetail">
+
+    <property name="net.sf.jasperreports.awt.ignore.missing.font" value="true"/>
+
+    <!-- ==================== STYLE ==================== -->
+    <style name="Base" isDefault="true" fontName="SansSerif" fontSize="9"/>
+    <style name="Heading" style="Base" fontSize="20" isBold="true"/>
+    <style name="SubHeading" style="Base" fontSize="11"/>
+    <style name="TableHeader" style="Base" isBold="true" forecolor="#FFFFFF" backcolor="#234B7D"/>
+    <style name="Cell" style="Base"/>
+    <style name="CellSmall" style="Base" fontSize="8"/>
+    <style name="Bold" style="Base" fontSize="10" isBold="true"/>
+
+    <!-- ==================== PARAMETER ==================== -->
+    <parameter name="NIM_AWAL" class="java.lang.String"/>
+    <parameter name="NIM_AKHIR" class="java.lang.String"/>
+    <parameter name="LOGO" class="java.awt.Image"/>
+
+    <!-- ==================== QUERY ==================== -->
+    <queryString language="SQL">
+        <![CDATA[
+            SELECT nim, name, major, email
+            FROM students
+            WHERE nim >= $P{NIM_AWAL}
+              AND nim <= $P{NIM_AKHIR}
+            ORDER BY nim ASC
+        ]]>
+    </queryString>
+
+    <!-- ==================== FIELD ==================== -->
+    <field name="nim" class="java.lang.String"/>
+    <field name="name" class="java.lang.String"/>
+    <field name="major" class="java.lang.String"/>
+    <field name="email" class="java.lang.String"/>
+
+    <!-- ==================== JUDUL LAPORAN ==================== -->
+    <title>
+        <band height="100">
+            <image scaleImage="RetainShape" hAlign="Left" vAlign="Middle" onErrorType="Blank">
+                <reportElement x="0" y="4" width="64" height="64"/>
+                <imageExpression><![CDATA[$P{LOGO}]]></imageExpression>
+            </image>
+
+            <staticText>
+                <reportElement style="Heading" x="0" y="5" width="535" height="32"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[LAPORAN DATA MAHASISWA]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement style="SubHeading" x="0" y="40" width="535" height="22"/>
+                <textElement textAlignment="Center" verticalAlignment="Middle"/>
+                <text><![CDATA[UNIVERSITAS BUDI LUHUR]]></text>
+            </staticText>
+
+            <line>
+                <reportElement x="0" y="72" width="535" height="1" forecolor="#234B7D"/>
+            </line>
+
+            <textField>
+                <reportElement style="Base" x="0" y="78" width="535" height="18"/>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA["Rentang NIM: " + $P{NIM_AWAL} + " s/d " + $P{NIM_AKHIR}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+
+    <!-- ==================== HEADER TABEL ==================== -->
+    <columnHeader>
+        <band height="28">
+            <staticText>
+                <reportElement style="TableHeader" mode="Opaque" x="0" y="0" width="90" height="28"/>
+                <box leftPadding="5">
+                    <pen lineWidth="0.5" lineColor="#FFFFFF"/>
+                </box>
+                <textElement verticalAlignment="Middle"/>
+                <text><![CDATA[NIM]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement style="TableHeader" mode="Opaque" x="90" y="0" width="160" height="28"/>
+                <box leftPadding="5">
+                    <pen lineWidth="0.5" lineColor="#FFFFFF"/>
+                </box>
+                <textElement verticalAlignment="Middle"/>
+                <text><![CDATA[NAMA MAHASISWA]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement style="TableHeader" mode="Opaque" x="250" y="0" width="130" height="28"/>
+                <box leftPadding="5">
+                    <pen lineWidth="0.5" lineColor="#FFFFFF"/>
+                </box>
+                <textElement verticalAlignment="Middle"/>
+                <text><![CDATA[JURUSAN]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement style="TableHeader" mode="Opaque" x="380" y="0" width="155" height="28"/>
+                <box leftPadding="5">
+                    <pen lineWidth="0.5" lineColor="#FFFFFF"/>
+                </box>
+                <textElement verticalAlignment="Middle"/>
+                <text><![CDATA[EMAIL]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <!-- ==================== DATA MAHASISWA ==================== -->
+    <detail>
+        <band height="25">
+            <textField isBlankWhenNull="true">
+                <reportElement style="Cell" x="0" y="0" width="90" height="25"/>
+                <box leftPadding="5">
+                    <pen lineWidth="0.5" lineColor="#CCCCCC"/>
+                </box>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{nim}]]></textFieldExpression>
+            </textField>
+
+            <textField isBlankWhenNull="true">
+                <reportElement style="Cell" x="90" y="0" width="160" height="25"/>
+                <box leftPadding="5" rightPadding="4">
+                    <pen lineWidth="0.5" lineColor="#CCCCCC"/>
+                </box>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+            </textField>
+
+            <textField isBlankWhenNull="true">
+                <reportElement style="Cell" x="250" y="0" width="130" height="25"/>
+                <box leftPadding="5" rightPadding="4">
+                    <pen lineWidth="0.5" lineColor="#CCCCCC"/>
+                </box>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{major}]]></textFieldExpression>
+            </textField>
+
+            <textField isBlankWhenNull="true">
+                <reportElement style="CellSmall" x="380" y="0" width="155" height="25"/>
+                <box leftPadding="5" rightPadding="4">
+                    <pen lineWidth="0.5" lineColor="#CCCCCC"/>
+                </box>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <!-- ==================== NOMOR HALAMAN ==================== -->
+    <pageFooter>
+        <band height="25">
+            <line>
+                <reportElement x="0" y="0" width="535" height="1" forecolor="#CCCCCC"/>
+            </line>
+
+            <textField>
+                <reportElement style="Base" x="0" y="5" width="495" height="18"/>
+                <textElement textAlignment="Right" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA["Halaman " + $V{PAGE_NUMBER} + " dari "]]></textFieldExpression>
+            </textField>
+
+            <textField evaluationTime="Report">
+                <reportElement style="Base" x="495" y="5" width="40" height="18"/>
+                <textElement textAlignment="Left" verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[String.valueOf($V{PAGE_NUMBER})]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+
+    <!-- ==================== TOTAL MAHASISWA ==================== -->
+    <summary>
+        <band height="30">
+            <staticText>
+                <reportElement style="Bold" x="0" y="5" width="125" height="20"/>
+                <textElement verticalAlignment="Middle"/>
+                <text><![CDATA[Total Mahasiswa:]]></text>
+            </staticText>
+
+            <textField>
+                <reportElement style="Bold" x="125" y="5" width="100" height="20"/>
+                <textElement verticalAlignment="Middle"/>
+                <textFieldExpression><![CDATA[String.valueOf($V{REPORT_COUNT})]]></textFieldExpression>
+            </textField>
+        </band>
+    </summary>
+
+</jasperReport>
